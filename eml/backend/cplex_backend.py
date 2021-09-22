@@ -64,8 +64,8 @@ class CplexBackend(base.Backend):
 
         """
         # Convert bounds in a cplex friendly format
-        lb = lb if lb != -float('inf') else -mdl.infinity()
-        ub = ub if ub != float('inf') else mdl.infinity()
+        lb = lb if lb != -float('inf') else -mdl.infinity
+        ub = ub if ub != float('inf') else mdl.infinity
         # Build the variable
         return mdl.continuous_var(lb=lb, ub=ub, name=name)
 

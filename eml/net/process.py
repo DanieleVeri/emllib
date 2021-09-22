@@ -39,12 +39,14 @@ def ibr_bounds(net):
     """
     # Sequentially process layers
     for lidx, layer in enumerate(net.layers()):
+        if lidx==0:
+            continue
         try:
             # Compute neuron activation
-            for nrn in layer.neurons():
+            for i, nrn in enumerate(layer.neurons()):
                 # Compute the neuron activity
                 yub, ylb = nrn.bias(), nrn.bias()
-                for idx, wgt in zip(nrn.connected(), nrn.weights()):
+                for idx, wgt in zip(nrn.connected(), nrn.weight()):
                     prd = net.neuron(idx)
                     if wgt >= 0: 
                         yub += wgt * prd.ub()
@@ -61,6 +63,7 @@ def ibr_bounds(net):
                 nrn.update_lb(lb)
                 nrn.update_ub(ub)
         except AttributeError as e:
+            print(e)
             pass
 
 # ============================================================================

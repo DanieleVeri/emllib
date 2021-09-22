@@ -85,6 +85,7 @@ def encode(bkd, net, mdl, net_in, net_out, name, verbose=0):
         len(net_out)
     except:
         net_out = [net_out]
+    print(net_out)
     # Build a model descriptor
     desc = util.ModelDesc(net, mdl, name)
     # Process the network layer by layer
@@ -158,7 +159,7 @@ def _add_neuron(bkd, desc, neuron, x=None):
     if issubclass(neuron.__class__, describe.DNRActNeuron):
         # Build an expression for the neuron activation
         coefs, yterms = [1], [neuron.bias()]
-        for pidx, wgt in zip(neuron.connected(), neuron.weights()):
+        for pidx, wgt in zip(neuron.connected(), neuron.weight()):
             prdx = desc.get('x', pidx)
             coefs.append(wgt)
             yterms.append(prdx)
