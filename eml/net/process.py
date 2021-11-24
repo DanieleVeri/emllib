@@ -24,15 +24,15 @@ from eml.net import embed
 def ibr_bounds(net):
     """ Internal Based Reasoning Bounding
 
-    The bounds of the units in the neural network are updated based on the 
+    The bounds of the units in the neural network are updated based on the
     values evaluated using the activation function
-    
+
     Parameteres
     -----------
         net : :obj:`eml.net.describe.DNRNet`
-            Neural network of interest 
+            Neural network of interest
 
-    Returns 
+    Returns
     -------
         None
 
@@ -48,7 +48,7 @@ def ibr_bounds(net):
                 yub, ylb = nrn.bias(), nrn.bias()
                 for idx, wgt in zip(nrn.connected(), nrn.weight()):
                     prd = net.neuron(idx)
-                    if wgt >= 0: 
+                    if wgt >= 0:
                         yub += wgt * prd.ub()
                         ylb += wgt * prd.lb()
                     else:
@@ -72,8 +72,8 @@ def ibr_bounds(net):
 
 def fwd_bound_tighthening(bkd, net=None, desc=None,
         timelimit=None, skip_layers=None, verbose=0):
-    """ Forward bound tightening via Mixed Integer Linear Programming 
-    
+    """ Forward bound tightening via Mixed Integer Linear Programming
+
 
     Parameters
     ----------
@@ -92,7 +92,7 @@ def fwd_bound_tighthening(bkd, net=None, desc=None,
 
     Returns
     -------
-        Total time : int 
+        Total time : int
             Time used to perform bound tightening by the optimizer
 
     Raises
@@ -133,8 +133,7 @@ def fwd_bound_tighthening(bkd, net=None, desc=None,
             # Compute bounds
             if verbose >= 1:
                 print('Computing bounds for %s' % str(neuron.idx()))
-            ltime, bchg = _neuron_bounds(bkd, desc, neuron, timelimit=tlim,
-                    verbose=verbose)
+            ltime = _neuron_bounds(bkd, desc, neuron, timelimit=tlim)
             ttime += ltime
             nleft -= 1
     # Return total time
@@ -142,8 +141,8 @@ def fwd_bound_tighthening(bkd, net=None, desc=None,
 
 
 def _neuron_bounds(bkd, desc, neuron, timelimit):
-    """ Bound tightening for neurons 
-    
+    """ Bound tightening for neurons
+
     Parameters
     ----------
         bkd : :obj:`eml.backend.cplex_backend.CplexBackend`
@@ -164,7 +163,7 @@ def _neuron_bounds(bkd, desc, neuron, timelimit):
     Raises
     ------
         ValueError
-            Neuron not in the current network 
+            Neuron not in the current network
 
     """
     # Preliminary checks
