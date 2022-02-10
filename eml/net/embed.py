@@ -85,7 +85,8 @@ def encode(bkd, net, mdl, net_in, net_out, name, verbose=0):
         len(net_out)
     except:
         net_out = [net_out]
-    print(net_out)
+    if verbose >= 1:
+        print(net_out)
     # Build a model descriptor
     desc = util.ModelDesc(net, mdl, name)
     # Process the network layer by layer
